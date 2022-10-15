@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "musicplatform"
+version = "0.1.0"
+description = ""
+authors = ["Ashraf  Ezz <Ashraf.Teleb99@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+Django = "^4.1.2"
+python-dotenv = "^0.21.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

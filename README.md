@@ -10,3 +10,4 @@
 - to use the venv use `poetry shell`
 - to install the defined dependencies for your project, just run `poetry install`
 - to run the project `python manage.py runserver`
+- to make superuser to access the admin dashboard `python manage.py createsuperuser`
