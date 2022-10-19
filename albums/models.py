@@ -1,5 +1,6 @@
 from django.db import models
 from artists.models import Artist
+from django.core.exceptions import ValidationError
 
 
 class TimeStampedModel(models.Model):
@@ -19,3 +20,11 @@ class Album(TimeStampedModel):
 
     def __str__(self):
         return "AlbumName is " + self.name
+
+    # def save(self):
+    #     try:
+    #         if len(self.song_set.all()) > 0:
+    #             raise ValidationError('This album should contains atleast one song')
+    #         self.save()
+    #     except ValueError:
+    #         pass
