@@ -1,26 +1,26 @@
-from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, generics, mixins
 from .serializer import *
+
 from albums.serializer import *
-
-from .models import *
 from albums.models import *
+from rest_framework import permissions
 
 
-class ArtistView(APIView):
+class ArtistView(generics.ListAPIView, generics.CreateAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def get(self, request):
-        albs = Album.objects.select_related('artists')
-        d = dict()
-        for a in albs:
-            d.setdefault(a.artists.id, []).append(AlbumSerializer(a).data)
-        return Response(d, status=status.HTTP_200_OK)
+    queryset = Artist.objects.all()
+    serializer_class = ArtistSerializer
 
-    def post(self, request):
-        serializer = ArtistSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get(self, request, *args, **kwargs):
+        artists = self.list(self, request, *args, **kwargs)
+        print(artists.data)
+        for idx, a in enumerate(artists.data):
+            artists.data[idx]["albums"] = AlbumSerializer(Album.objects.filter(artists=list(a.items())[0][1]),
+                                                          many=True).data
+        return Response(artists.data, status=status.HTTP_200_OK)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)

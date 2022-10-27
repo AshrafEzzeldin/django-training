@@ -9,6 +9,9 @@ class ArtistTestCase(TestCase):
         Artist.objects.create(stageName="lion", socialLink="roar")
         Artist.objects.create(stageName="tiger", socialLink="meaw")
 
+    # {
+    #     "stageName": "lion", "socialLink": "http://127.0.0.1:8000/artists/"
+    # }
     def test_get_artists(self):
         c = Client()
         response = c.get('/artists/')
