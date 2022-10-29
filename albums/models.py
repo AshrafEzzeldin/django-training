@@ -1,5 +1,5 @@
 from django.db import models
-from artists.models import Artist
+# from artists.models import Artist
 from django.core.exceptions import ValidationError
 
 
@@ -11,7 +11,7 @@ class TimeStampedModel(models.Model):
 
 
 class Album(TimeStampedModel):
-    artists = models.ForeignKey(Artist, on_delete=models.CASCADE)
+    # artists = models.ForeignKey(Artist, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, default="New Album")
     # creationDate = models.DateTimeField(auto_now_add=True)
     releaseDate = models.DateTimeField()
