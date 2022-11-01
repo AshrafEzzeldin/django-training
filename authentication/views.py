@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from .serializer import RegisterSerializer
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.auth import AuthToken
+from rest_framework import status
 
 
 class LoginView(APIView):
@@ -23,7 +24,7 @@ class LoginView(APIView):
                     "email": user.email,
                     "bio": user.bio
                 }
-            }
+            }, status=status.HTTP_200_OK
         )
 
 
@@ -33,4 +34,4 @@ class RegisterView(APIView):
         serializer = RegisterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
