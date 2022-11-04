@@ -1,8 +1,7 @@
-from knox.auth import TokenAuthentication
 from rest_framework import generics, status
 from rest_framework.response import Response
-
 from artists.filters import AlbumFilter
+from artists.models import Artist
 from artists.serializer import ArtistSerializer
 from .permissions import Artist_perm
 from .serializer import *
@@ -13,6 +12,7 @@ class AlbumView(generics.ListAPIView, generics.CreateAPIView):
 
     queryset = Album.objects.filter(approved=True)
     serializer_class = AlbumSerializer
+
     filterset_class = AlbumFilter
 
     def get(self, request, *args, **kwargs):
